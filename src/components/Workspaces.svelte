@@ -7,6 +7,8 @@
 
   import Button from "./Button.svelte";
 
+  import CurrentTitle from "./CurrentTitle.svelte";
+
   const getProcessIcon = (child: Window) => {
     const possibleAppNames = [
       child.title.toLowerCase(),
@@ -24,17 +26,19 @@
     return entry?.iconName ?? "ti-background";
   };
 
-  let { glazewm } : { glazewm: GlazeWmOutput}= $props()
+  let { glazewm }: { glazewm: GlazeWmOutput } = $props();
 </script>
 
 {#if glazewm}
   <div class="flex flex-row gap-2 items-center">
+    <CurrentTitle {glazewm} />
     {#each glazewm.currentWorkspaces as workspace, i}
       <Button
         iconClass="ti {workspace.hasFocus ? 'ti-point-filled' : 'ti-point'}"
         class="text-zb-ws-{i}"
         callback={() =>
           glazewm!.runCommand(`focus --workspace ${workspace.name}`)}
+        label={workspace.name}
       />
     {/each}
     <button

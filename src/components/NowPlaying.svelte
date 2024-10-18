@@ -9,15 +9,12 @@
     {#each glazewm.allWorkspaces as workspace}
       {#each workspace.children as child}
         {#if child.type == "window" && child.processName.toLowerCase() === "spotify"}
-          {#if child.title.toLowerCase() === "spotify premium"}
-            <i class="ti ti-music-off text-zb-spotify-paused"></i>
-            nothing is playing
-          {:else}
-            <i class="ti ti-music text-zb-spotify-playing"></i>
-            <span class="max-w-md truncate">
+          <span class="max-w-md truncate">
+            {#if !child.title.toLowerCase().includes("spotify")}
+              <i class="ti ti-music text-zb-spotify-playing"></i>
               {child.title}
-            </span>
-          {/if}
+            {/if}
+          </span>
         {/if}
       {/each}
     {/each}
